@@ -8,11 +8,12 @@ class Guid extends BaseModel
 {
     // product
     
-    const CODE_PRODUCT = 11;
-
+    const PREFIX_CODE_PRODUCT = 11;
+    
     protected $fillable = [
         'code',
         'counter',
     ];
-
+    
+    protected $table = 'guids';
 }

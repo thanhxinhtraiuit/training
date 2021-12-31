@@ -41,7 +41,8 @@
             "B\\": "modules/B/src",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Products\\": "modules/Products/src/"
+            "Products\\": "modules/Products/src/",
+            "Common\\": "modules/Common/src/"
         }
     },
     "autoload-dev": {

@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('sku')->index();
+            $table->string('sku',20)->index();
             $table->string('name',255)->nullable();
             $table->bigInteger('price')->nullable();
             $table->integer('status')->index();
