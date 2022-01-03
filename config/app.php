@@ -178,7 +178,8 @@ return [
         A\AServiceProvider::class,
         B\BServiceProvider::class,
         Products\ProductServiceProvider::class,
-        Common\CommonServiceProvider::class
+        Common\CommonServiceProvider::class,
+        Accounting\AccountingServiceProvider::class
 
     ],
 
