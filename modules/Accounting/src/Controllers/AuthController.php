@@ -1,4 +1,5 @@
 <?php
+
 namespace Accounting\Controllers;
 
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Str;
+use Accounting\Jobs\UserJob;
 
 use App\Models\User;
 use Accounting\Models\User as modelUser;
@@ -50,12 +51,15 @@ class AuthController extends Controller
             'password' => bcrypt($request->password)
         ]);
         $user->save();
+
+        $this->dispatchJob(new UserJob(['user_id' => $user->id]), 'Accouting-user');
+        
         return response()->json([
             'status' => 1,
             'message' => 'Successfully created user!'
         ], 200);
     }
-  
+
     /**
      * Login user and create token
      *
@@ -82,7 +86,7 @@ class AuthController extends Controller
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         $credentials = request(['email', 'password']);
-        if(!Auth::attempt($credentials))
+        if (!Auth::attempt($credentials))
             return response()->json([
                 'message' => 'Email or password incorrect!'
             ], 401);
@@ -101,7 +105,7 @@ class AuthController extends Controller
             )->toDateTimeString()
         ]);
     }
-  
+
     /**
      * Logout user (Revoke the token)
      *
@@ -114,7 +118,7 @@ class AuthController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
-  
+
     /**
      * Get the authenticated User
      *

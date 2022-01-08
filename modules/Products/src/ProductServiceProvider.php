@@ -21,7 +21,6 @@ class ProductServiceProvider extends ServiceProvider
         foreach ($arrRepoName as $repoName) {
             $this->app->bind("Products\\Repositories\\Contracts\\{$repoName}Interface", "Products\\Repositories\\{$repoName}");
         }
-
     }
     /**
      * Bootstrap any application services.
@@ -30,8 +29,8 @@ class ProductServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Route::group(['prefix' => 'product', 'namespace' => 'Products\\Controllers'], function() {
-            require __DIR__."/routes.php";
+        Route::group(['prefix' => 'api', 'namespace' => 'Products\\Controllers'], function () {
+            require __DIR__ . "/routes.php";
         });
     }
 }

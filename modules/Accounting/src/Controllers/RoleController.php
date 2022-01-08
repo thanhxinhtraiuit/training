@@ -1,4 +1,5 @@
 <?php
+
 namespace Accounting\Controllers;
 
 use Core\Controllers\BaseController as Controller;
@@ -8,17 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Str;
+// use Illuminate\Support\Str;
 
 use Accounting\Repositories\Contracts\RoleRepositoryInterface;
 use Common\Repositories\Contracts\GuidRepositoryInterface;
 
 class RoleController extends Controller
 {
-    private $roleRepository,$guidRepository;
+    private $roleRepository, $guidRepository;
 
     public function __construct(
-        RoleRepositoryInterface $roleRepository,  GuidRepositoryInterface $guidRepository
+        RoleRepositoryInterface $roleRepository,
+        GuidRepositoryInterface $guidRepository
     ) {
         $this->roleRepository = $roleRepository;
         $this->guidRepository = $guidRepository;
@@ -40,8 +42,8 @@ class RoleController extends Controller
 
         $arrExtend = [];
 
-        $arrDataResponse = $this->roleRepository->findExtend($arrRequest,null, $arrSort, $limit, $offset,null,$arrExtend);
-        
+        $arrDataResponse = $this->roleRepository->findExtend($arrRequest, null, $arrSort, $limit, $offset, null, $arrExtend);
+
         return new JsonResponse([
             'message' => 'Success',
             'status' => BaseModel::CODE_SUCCESS,
@@ -56,8 +58,8 @@ class RoleController extends Controller
 
         try {
             $this->validate($request, [
-              'name' => 'required|string|max:255',
-          ]);
+                'name' => 'required|string|max:255',
+            ]);
         } catch (ValidationException $e) {
             return new JsonResponse([
                 'message' => $e->getMessage(),
@@ -83,7 +85,6 @@ class RoleController extends Controller
             'code' => Response::HTTP_OK,
             'data' => $arrDataResponse,
         ], Response::HTTP_OK);
-
     }
 
     public function update(Request $request, $id)
@@ -92,13 +93,12 @@ class RoleController extends Controller
             if ($id < 1) {
                 return false;
             }
-
         } catch (ValidationException $e) {
             return new JsonResponse([
-              'message' => $e->getMessage(),
-              'status' => BaseModel::CODE_ERROR,
-              'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
-          ], Response::HTTP_UNPROCESSABLE_ENTITY);
+                'message' => $e->getMessage(),
+                'status' => BaseModel::CODE_ERROR,
+                'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         //check permission
@@ -107,7 +107,7 @@ class RoleController extends Controller
         //
         $arrRequest = $request->all();
 
-        $arrDataResponse = $this->roleRepository->update($arrRequest,$id);
+        $arrDataResponse = $this->roleRepository->update($arrRequest, $id);
 
         return new JsonResponse([
             'message' => 'Success',
@@ -115,7 +115,6 @@ class RoleController extends Controller
             'code' => Response::HTTP_OK,
             'data' => $arrDataResponse,
         ], Response::HTTP_OK);
-
     }
 
     public function delete($id)
@@ -134,9 +133,10 @@ class RoleController extends Controller
             'data' => $arrDataResponse,
         ], Response::HTTP_OK);
     }
-    
 
-    public function detail(Request $request, $id){
+
+    public function detail(Request $request, $id)
+    {
 
         $arrRequest = $request->all();
 
@@ -156,9 +156,9 @@ class RoleController extends Controller
     {
         try {
             $this->validate($request, [
-              'arr_permission_id' => 'required',
-              'role_id' => 'required|integer',
-          ]);
+                'arr_permission_id' => 'required',
+                'role_id' => 'required|integer',
+            ]);
         } catch (ValidationException $e) {
             return new JsonResponse([
                 'message' => $e->getMessage(),
